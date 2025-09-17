@@ -1,10 +1,11 @@
-FROM gitpod/workspace-full
+# .gitpod.Dockerfile
+FROM gitpod/workspace-full:latest
 
-# Install OpenJDK 17 and Maven
-RUN sudo apt-get update \
- && sudo apt-get install -y openjdk-17-jdk maven \
- && sudo apt-get clean
+# Install Java 17 + Maven
+USER root
+RUN apt-get update && apt-get install -y maven openjdk-17-jdk && rm -rf /var/lib/apt/lists/*
 
-# Set JAVA_HOME
 ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
 ENV PATH=$JAVA_HOME/bin:$PATH
+
+USER gitpod

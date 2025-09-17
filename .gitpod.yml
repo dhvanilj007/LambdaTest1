@@ -1,15 +1,37 @@
-# Gitpod configuration for Java + TestNG + Maven
+# .gitpod.yml
+# Gitpod configuration for Java + Maven + TestNG project in IntelliJ IDEA
+
 image:
   file: .gitpod.Dockerfile
 
+# Prebuild/initialize project
 tasks:
-  - name: Build & Test
-    init: mvn clean install -DskipTests   # runs once when workspace is created
-    command: mvn test                     # runs on every start
+  - name: Setup Maven Project
+    init: |
+      mvn clean install -DskipTests
+    command: |
+      echo "✅ Project is ready to run in IntelliJ IDEA"
 
+  - name: Run Tests (Maven)
+    command: |
+      mvn test
+
+# Expose ports if you run any web server (optional)
+ports:
+  - port: 8080
+    onOpen: ignore
+
+# IntelliJ IDEA Gateway Support
+jetbrains:
+  intellij:
+    prebuilds:
+      version: stable
+
+# VS Code fallback (if using browser IDE instead of JetBrains Gateway)
 vscode:
   extensions:
-    - vscjava.vscode-java-pack            # Java support
-    - vscjava.vscode-testng               # TestNG plugin
-    - redhat.java                         # Language support for Java
-    - mhutchie.git-graph                  # Optional: Git graph visualization
+    - redhat.java
+    - vscjava.vscode-maven
+    - vscjava.vscode-java-test
+    - vscjava.vscode-test-explorer
+    - JetBrains.gitpod-jetbrains
