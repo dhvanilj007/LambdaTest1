@@ -1,0 +1,15 @@
+# Gitpod configuration for Java + TestNG + Maven
+image:
+  file: .gitpod.Dockerfile
+
+tasks:
+  - name: Build & Test
+    init: mvn clean install -DskipTests   # runs once when workspace is created
+    command: mvn test                     # runs on every start
+
+vscode:
+  extensions:
+    - vscjava.vscode-java-pack            # Java support
+    - vscjava.vscode-testng               # TestNG plugin
+    - redhat.java                         # Language support for Java
+    - mhutchie.git-graph                  # Optional: Git graph visualization
